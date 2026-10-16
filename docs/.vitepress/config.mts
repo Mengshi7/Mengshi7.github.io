@@ -7,6 +7,7 @@ export default defineConfig({
   description: '记录 Java、Spring Boot、Redis、MySQL、Linux、Docker 等技术学习与开发实践。',
   base: '/',
   cleanUrls: true,
+  lastUpdated: true,
   markdown: {
     config(md) {
       md.use(mathjax3)
@@ -22,6 +23,7 @@ export default defineConfig({
       { text: 'MySQL', link: '/MySQL/' },
       { text: 'Linux', link: '/Linux/' },
       { text: 'Docker', link: '/Docker/' },
+      { text: 'GitHub', link: 'https://github.com/Mengshi7' },
     ],
     sidebar: {
       '/Java/': [
@@ -55,6 +57,10 @@ export default defineConfig({
           },
         },
       },
+    },
+    editLink: {
+      pattern: 'https://github.com/Mengshi7/Mengshi7.github.io/edit/main/docs/:path',
+      text: '在 GitHub 上编辑此页',
     },
     outline: { label: '本页目录' },
     docFooter: { prev: '上一篇', next: '下一篇' },
