@@ -1,0 +1,190 @@
+content:
+  - name: java
+    label: Java
+    type: collection
+    path: docs/Java
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    subfolders: true
+    operations:
+      create: true
+      rename: false
+      delete: false
+    view:
+      primary: title
+      layout: tree
+      node:
+        filename: index.md
+        hideDirs: others
+    fields:
+      - name: title
+        label: 标题
+        type: string
+        required: true
+      - name: body
+        label: 正文
+        type: rich-text
+        options:
+          format: markdown
+  - name: spring
+    label: Spring
+    type: collection
+    path: docs/Spring
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    subfolders: true
+    operations:
+      create: true
+      rename: false
+      delete: false
+    view:
+      primary: title
+      layout: tree
+      node:
+        filename: index.md
+        hideDirs: others
+    fields:
+      - name: title
+        label: 标题
+        type: string
+        required: true
+      - name: body
+        label: 正文
+        type: rich-text
+        options:
+          format: markdown
+  - name: redis
+    label: Redis
+    type: collection
+    path: docs/Redis
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    subfolders: true
+    operations:
+      create: true
+      rename: false
+      delete: false
+    view:
+      primary: title
+      layout: tree
+      node:
+        filename: index.md
+        hideDirs: others
+    fields:
+      - name: title
+        label: 标题
+        type: string
+        required: true
+      - name: body
+        label: 正文
+        type: rich-text
+        options:
+          format: markdown
+  - name: mysql
+    label: MySQL
+    type: collection
+    path: docs/MySQL
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    subfolders: true
+    operations:
+      create: true
+      rename: false
+      delete: false
+    view:
+      primary: title
+      layout: tree
+      node:
+        filename: index.md
+        hideDirs: others
+    fields:
+      - name: title
+        label: 标题
+        type: string
+        required: true
+      - name: body
+        label: 正文
+        type: rich-text
+        options:
+          format: markdown
+  - name: linux
+    label: Linux
+    type: collection
+    path: docs/Linux
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    subfolders: true
+    operations:
+      create: true
+      rename: false
+      delete: false
+    view:
+      primary: title
+      layout: tree
+      node:
+        filename: index.md
+        hideDirs: others
+    fields:
+      - name: title
+        label: 标题
+        type: string
+        required: true
+      - name: body
+        label: 正文
+        type: rich-text
+        options:
+          format: markdown
+  - name: docker
+    label: Docker
+    type: collection
+    path: docs/Docker
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    subfolders: true
+    operations:
+      create: true
+      rename: false
+      delete: false
+    view:
+      primary: title
+      layout: tree
+      node:
+        filename: index.md
+        hideDirs: others
+    fields:
+      - name: title
+        label: 标题
+        type: string
+        required: true
+      - name: body
+        label: 正文
+        type: rich-text
+        options:
+          format: markdown
+  - name: acm
+    label: ACM
+    type: collection
+    path: docs/ACM
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    subfolders: true
+    operations:
+      create: true
+      rename: false
+      delete: false
+    view:
+      primary: title
+      layout: tree
+      node:
+        filename: index.md
+        hideDirs: others
+    fields:
+      - name: title
+        label: 标题
+        type: string
+        required: true
+      - name: body
+        label: 正文
+        type: rich-text
+        options:
+          format: markdown

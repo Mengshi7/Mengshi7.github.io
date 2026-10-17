@@ -1,10 +1,67 @@
 import { defineConfig } from 'vitepress'
 import mathjax3 from 'markdown-it-mathjax3'
+import { readdirSync, readFileSync, statSync } from 'node:fs'
+import { basename, extname, join, relative, sep } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const docsDir = fileURLToPath(new URL('..', import.meta.url))
+const categories = [
+  { name: 'Java', label: 'Java' },
+  { name: 'Spring', label: 'Spring Boot' },
+  { name: 'Redis', label: 'Redis' },
+  { name: 'MySQL', label: 'MySQL' },
+  { name: 'Linux', label: 'Linux' },
+  { name: 'Docker', label: 'Docker' },
+  { name: 'ACM', label: 'ACM' },
+]
+
+function markdownLabel(file: string) {
+  const source = readFileSync(file, 'utf8')
+  const heading = source.match(/^#\s+(.+)$/m)?.[1]?.trim()
+  return heading || basename(file, extname(file))
+}
+
+function sidebarItems(directory: string): Array<Record<string, unknown>> {
+  const entries = readdirSync(directory)
+    .map((name) => ({ name, path: join(directory, name) }))
+    .sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'))
+  const index = entries.find((entry) => entry.name.toLowerCase() === 'index.md')
+  const items: Array<Record<string, unknown>> = []
+
+  if (index) {
+    const route = `/${relative(docsDir, index.path).split(sep).join('/').replace(/index\.md$/i, '')}`
+    items.push({ text: '分类首页', link: route })
+  }
+
+  for (const entry of entries) {
+    if (entry === index) continue
+    if (statSync(entry.path).isDirectory()) {
+      const children = sidebarItems(entry.path)
+      if (children.length) items.push({ text: entry.name, items: children })
+      continue
+    }
+    if (extname(entry.name).toLowerCase() !== '.md') continue
+
+    const route = `/${relative(docsDir, entry.path).split(sep).join('/').replace(/\.md$/i, '')}`
+    items.push({ text: markdownLabel(entry.path), link: route })
+  }
+
+  return items
+}
+
+const sidebar = Object.fromEntries(
+  categories
+    .filter(({ name }) => readdirSync(docsDir).includes(name))
+    .map(({ name, label }) => [
+      `/${name}/`,
+      [{ text: label, items: sidebarItems(join(docsDir, name)) }],
+    ]),
+)
 
 export default defineConfig({
   lang: 'zh-CN',
   title: '我的技术笔记',
-  description: '记录 Java、Spring Boot、Redis、MySQL、Linux、Docker 等技术学习与开发实践。',
+  description: '记录 Java、Spring Boot、Redis、MySQL、Linux、Docker、ACM 等技术学习与开发实践。',
   base: '/',
   cleanUrls: true,
   lastUpdated: true,
@@ -23,24 +80,10 @@ export default defineConfig({
       { text: 'MySQL', link: '/MySQL/' },
       { text: 'Linux', link: '/Linux/' },
       { text: 'Docker', link: '/Docker/' },
+      { text: 'ACM', link: '/ACM/' },
       { text: 'GitHub', link: 'https://github.com/Mengshi7' },
     ],
-    sidebar: {
-      '/Java/': [
-        { text: 'Java', items: [
-          { text: '分类首页', link: '/Java/' },
-          { text: 'Java 笔记模板', link: '/Java/Java笔记模板' },
-        ] },
-      ],
-      '/Spring/': [{ text: 'Spring Boot', items: [{ text: '分类首页', link: '/Spring/' }] }],
-      '/Redis/': [{ text: 'Redis', items: [
-        { text: '分类首页', link: '/Redis/' },
-        { text: 'Redis 基础', link: '/Redis/Redis基础' },
-      ] }],
-      '/MySQL/': [{ text: 'MySQL', items: [{ text: '分类首页', link: '/MySQL/' }] }],
-      '/Linux/': [{ text: 'Linux', items: [{ text: '分类首页', link: '/Linux/' }] }],
-      '/Docker/': [{ text: 'Docker', items: [{ text: '分类首页', link: '/Docker/' }] }],
-    },
+    sidebar,
     search: {
       provider: 'local',
       options: {
